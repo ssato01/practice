@@ -7,7 +7,7 @@ class CheckYear {
     public CheckYear(int year) {
         this.year = year;
     }
-    public static boolean isLeapYear(int year) {
+    public boolean isLeapYear(int year) {
         return (year % 4 == 0) && (year % 100 != 0 || year % 400 == 0);
     }
 }
@@ -35,7 +35,7 @@ class Main {
         }
 
         System.out.println(checkyear.year + "年はうるう年か："
-                + CheckYear.isLeapYear(checkyear.year));
+                + checkyear.isLeapYear(checkyear.year));
         sc.close();
 
     }
