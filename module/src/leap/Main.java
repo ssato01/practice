@@ -1,9 +1,7 @@
+import leap.Util;
+
 import java.util.InputMismatchException;
 import java.util.Scanner;
-
-public static boolean isLeapYear(int year) {
-    return (year % 4 == 0) && (year % 100 != 0 || year % 400 == 0);
-}
 
 void main() {
     int year;
@@ -25,7 +23,7 @@ void main() {
         }
     }
 
-    System.out.println(year + "年はうるう年か：" + isLeapYear(year));
+    System.out.println(year + "年はうるう年か：" + Util.isLeapYear(year));
     sc.close();
 
 }
