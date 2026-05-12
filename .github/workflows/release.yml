@@ -70,7 +70,7 @@ jobs:
             release_version="$specified_version"
           else
             latest_tag="${{ steps.latest_tag.outputs.latest_tag }}"
-            version="${latest_tag#v}"
+            version="${latest_tag#$tag_prefix}"
 
             major=$(echo "$version" | cut -d. -f1)
             minor=$(echo "$version" | cut -d. -f2)
