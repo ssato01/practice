@@ -59,6 +59,7 @@ jobs:
         id: release_version
         run: |
           specified_version="${{ github.event.inputs.version }}"
+          tag_prefix="${{ steps.tag_prefix.outputs.tag_prefix }}"
 
           if [ -n "$specified_version" ]; then
             if ! echo "$specified_version" | grep -Eq '^v[0-9]+\.[0-9]+\.[0-9]+$'; then
@@ -78,7 +79,7 @@ jobs:
 
             patch=$((patch + 1))
 
-            release_version="v${major}.${minor}.${patch}"
+            release_version="$tag_prefix${major}.${minor}.${patch}"
           fi
 
           echo "release_version=$release_version" >> "$GITHUB_OUTPUT"
