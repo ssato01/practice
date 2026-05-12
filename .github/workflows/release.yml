@@ -12,7 +12,6 @@ on:
     branches:
       - main
       - develop
-      - feature/action_check
 
 permissions:
   contents: write
@@ -26,19 +25,32 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
-
-      - name: Configure Git user
+          
+      - name: Determine tag prefix
+        id: tag_prefix
         run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
+          branch_name="${GITHUB_REF_NAME}"
+
+          if [ "$branch_name" = "main" ]; then
+            tag_prefix="v"
+          elif [ "$branch_name" = "develop" ]; then
+            tag_prefix="dev-v"
+          else
+            echo "Error: unsupported branch: $branch_name"
+            exit 1
+          fi
+
+          echo "tag_prefix=$tag_prefix" >> "$GITHUB_OUTPUT"
 
       - name: Get latest version tag
         id: latest_tag
         run: |
-          latest_tag=$(git tag --sort=-v:refname | grep '^v[0-9]\+\.[0-9]\+\.[0-9]\+$' | head -n 1)
+          tag_prefix="${{ steps.tag_prefix.outputs.tag_prefix }}"
+
+          latest_tag=$(git tag --sort=-v:refname | grep "^${tag_prefix}[0-9]\+\.[0-9]\+\.[0-9]\+$" | head -n 1)
 
           if [ -z "$latest_tag" ]; then
-            latest_tag="v0.0.0"
+            latest_tag="${tag_prefix}0.0.0"
           fi
 
           echo "latest_tag=$latest_tag" >> "$GITHUB_OUTPUT"
