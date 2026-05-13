@@ -9,19 +9,17 @@ import (
 
 func isLeapYear(year int) bool {
 
-	isLeap := false
-
 	if year%4 == 0 {
 		if year%100 != 0 {
-			isLeap = true
+			return true
 		} else {
 			if year%400 == 0 {
-				isLeap = true
+				return true
 			}
 		}
 	}
 
-	return isLeap
+	return false
 }
 
 func main() {
