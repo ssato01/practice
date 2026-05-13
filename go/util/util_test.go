@@ -44,7 +44,7 @@ func Test_isLeapYear(t *testing.T) {
 	}
 }
 
-func Test_isLeapYear_assert(t *testing.T) {
+func Test_isLeapYearAssert(t *testing.T) {
 	for _, tt := range leapYearTests {
 		t.Run(tt.name, func(t *testing.T) {
 			got := isLeapYear(tt.args)
